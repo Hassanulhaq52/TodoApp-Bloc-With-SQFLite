@@ -52,8 +52,7 @@ class _SqFliteDemoState extends State<SqFliteDemo> {
           color: Colors.black87,
         ),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (c) => const AddTodoPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (c) => const AddTodoPage()));
         },
       ),
       body: BlocBuilder<CrudBloc, CrudState>(
@@ -85,13 +84,11 @@ class _SqFliteDemoState extends State<SqFliteDemo> {
                             itemBuilder: (context, i) {
                               return GestureDetector(
                                 onTap: () {
-                                  context.read<CrudBloc>().add(
-                                      FetchSpecificTodo(id: state.todo[i].id!));
+                                  context.read<CrudBloc>().add(FetchSpecificTodo(id: state.todo[i].id!));
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const DetailsPage()),
+                                      builder: ((context) => const DetailsPage()),
                                     ),
                                   );
                                 },
@@ -106,28 +103,17 @@ class _SqFliteDemoState extends State<SqFliteDemo> {
                                         ListTile(
                                           title: Text(
                                             state.todo[i].title.toUpperCase(),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                           ),
                                           trailing: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               IconButton(
                                                   onPressed: () {
-                                                    context
-                                                        .read<CrudBloc>()
-                                                        .add(DeleteTodo(
-                                                            id: state
-                                                                .todo[i].id!));
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                            const SnackBar(
-                                                      duration: Duration(
-                                                          milliseconds: 500),
-                                                      content:
-                                                          Text("deleted todo"),
+                                                    context.read<CrudBloc>().add(DeleteTodo(id: state.todo[i].id!));
+                                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                      duration: Duration(milliseconds: 500),
+                                                      content: Text("deleted todo"),
                                                     ));
                                                   },
                                                   icon: const Icon(

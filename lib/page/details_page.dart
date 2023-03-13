@@ -24,9 +24,7 @@ class _DetailsPageState extends State<DetailsPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             context.read<CrudBloc>().add(const FetchTodos());
             Navigator.pop(context);
@@ -45,135 +43,108 @@ class _DetailsPageState extends State<DetailsPage> {
                 children: [
                   CustomText(text: 'title'.toUpperCase()),
                   const SizedBox(height: 10),
-                  TextFormField(
-                      initialValue: currentTodo.title, enabled: false),
+                  TextFormField(initialValue: currentTodo.title, enabled: false),
                   const SizedBox(height: 10),
                   CustomText(text: 'description'.toUpperCase()),
                   const SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: currentTodo.description,
-                    enabled: false,
-                  ),
+                  TextFormField(initialValue: currentTodo.description, enabled: false),
                   const SizedBox(height: 10),
                   CustomText(text: 'date made'.toUpperCase()),
                   const SizedBox(height: 10),
-                  CustomText(
-                      text: DateFormat.yMMMEd().format(state.todo.createdTime)),
+                  CustomText(text: DateFormat.yMMMEd().format(state.todo.createdTime)),
                   const SizedBox(height: 10),
                   CustomText(text: 'important / not important'.toUpperCase()),
                   const SizedBox(height: 10),
-                  CustomText(
-                      text: (state.todo.isImportant == true
-                              ? 'important'
-                              : 'not important')
-                          .toUpperCase()),
+                  CustomText(text: (state.todo.isImportant == true ? 'important' : 'not important').toUpperCase()),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext cx) {
-                              return StatefulBuilder(
-                                builder: ((context, setState) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                      'Update Todo',
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          letterSpacing: 2,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text('Title')),
-                                        Flexible(
-                                          child: TextFormField(
-                                            decoration: const InputDecoration(
-                                              isDense: true,
-                                            ),
-                                            maxLines: 1,
-                                            controller: _newTitle,
-                                          ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext cx) {
+                            return StatefulBuilder(
+                              builder: ((context, setState) {
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Update Todo',
+                                    style: TextStyle(fontSize: 25, letterSpacing: 2, fontWeight: FontWeight.bold),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Align(alignment: Alignment.topLeft, child: Text('Title')),
+                                      Flexible(
+                                        child: TextFormField(
+                                          decoration: const InputDecoration(isDense: true),
+                                          maxLines: 1,
+                                          controller: _newTitle,
                                         ),
-                                        const SizedBox(height: 10),
-                                        const Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text('Description')),
-                                        Flexible(
-                                          child: TextFormField(
-                                            controller: _newDescription,
-                                            decoration: const InputDecoration(
-                                              isDense: true,
-                                            ),
-                                            maxLines: 2,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                                'Important / Not Important'),
-                                            Switch(
-                                              value: toggleSwitch,
-                                              onChanged: (newVal) {
-                                                setState(() {
-                                                  toggleSwitch = newVal;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    actions: [
-                                      ElevatedButton(
-                                        style: Constants.customButtonStyle,
-                                        onPressed: () {
-                                          Navigator.pop(cx);
-                                        },
-                                        child: const Text('Cancel'),
                                       ),
-                                      ElevatedButton(
-                                        style: Constants.customButtonStyle,
-                                        onPressed: () async {
-                                          context.read<CrudBloc>().add(
-                                                UpdateTodo(
-                                                  todo: Todo(
-                                                    id: currentTodo.id,
-                                                    createdTime: DateTime.now(),
-                                                    description:
-                                                        _newDescription.text,
-                                                    isImportant: toggleSwitch,
-                                                    number: currentTodo.number,
-                                                    title: _newTitle.text,
-                                                  ),
-                                                ),
-                                              );
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                            backgroundColor:
-                                                Constants.primaryColor,
-                                            duration: Duration(seconds: 1),
-                                            content:
-                                                Text('Todo details updated'),
-                                          ));
-                                          Navigator.of(context).popUntil(
-                                              (route) => route.isFirst);
-                                          context
-                                              .read<CrudBloc>()
-                                              .add(const FetchTodos());
-                                        },
-                                        child: const Text('Update'),
+                                      const SizedBox(height: 10),
+                                      const Align(alignment: Alignment.topLeft, child: Text('Description')),
+                                      Flexible(
+                                        child: TextFormField(
+                                          controller: _newDescription,
+                                          decoration: const InputDecoration(isDense: true),
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('Important / Not Important'),
+                                          Switch(
+                                            value: toggleSwitch,
+                                            onChanged: (newVal) {
+                                              setState(() {
+                                                toggleSwitch = newVal;
+                                              });
+                                            },
+                                          ),
+                                        ],
                                       ),
                                     ],
-                                  );
-                                }),
-                              );
-                            });
-                      },
-                      child: const Text('Update'))
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: Constants.customButtonStyle,
+                                      onPressed: () {
+                                        Navigator.pop(cx);
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    ElevatedButton(
+                                      style: Constants.customButtonStyle,
+                                      onPressed: () async {
+                                        context.read<CrudBloc>().add(
+                                              UpdateTodo(
+                                                todo: Todo(
+                                                  id: currentTodo.id,
+                                                  createdTime: DateTime.now(),
+                                                  description: _newDescription.text,
+                                                  isImportant: toggleSwitch,
+                                                  number: currentTodo.number,
+                                                  title: _newTitle.text,
+                                                ),
+                                              ),
+                                            );
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                          backgroundColor: Constants.primaryColor,
+                                          duration: Duration(seconds: 1),
+                                          content: Text('Todo details updated'),
+                                        ));
+                                        Navigator.of(context).popUntil((route) => route.isFirst);
+                                        context.read<CrudBloc>().add(const FetchTodos());
+                                      },
+                                      child: const Text('Update'),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            );
+                          });
+                    },
+                    child: const Text('Update'),
+                  ),
                 ],
               );
             }

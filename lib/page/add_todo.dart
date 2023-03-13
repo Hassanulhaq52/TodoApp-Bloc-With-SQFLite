@@ -49,8 +49,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 builder: (context, state) {
                   return ElevatedButton(
                       onPressed: () {
-                        if (_title.text.isNotEmpty &&
-                            _description.text.isNotEmpty) {
+                        if (_title.text.isNotEmpty && _description.text.isNotEmpty) {
                           context.read<CrudBloc>().add(
                                 AddTodo(
                                   title: _title.text,
@@ -60,8 +59,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                                   createdTime: DateTime.now(),
                                 ),
                               );
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             duration: Duration(seconds: 1),
                             content: Text("todo added successfully"),
                           ));
@@ -69,9 +67,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                           Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                "title and description fields must not be blank"
-                                    .toUpperCase()),
+                            content: Text("title and description fields must not be blank".toUpperCase()),
                           ));
                         }
                       },
